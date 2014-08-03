@@ -1,23 +1,23 @@
 #!/usr/bin/php -q
-<?php 
+<?php
 /**
 * Copyright (C) 2007-2011 Olivier Amrein
 * Author Olivier Amrein <olivier@brender-farm.org> 2007-2011
-* 
+*
 * ***** BEGIN GPL LICENSE BLOCK *****
 *
 * This file is part of Brender.
 *
-* Brender is free software: you can redistribute it and/or 
-* modify it under the terms of the GNU General Public License 
+* Brender is free software: you can redistribute it and/or
+* modify it under the terms of the GNU General Public License
 * as published by the Free Software Foundation, either version 2 * of the License, or any later version.
-* 
+*
 * Brender is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 * GNU General Public License for more details.
 *
-* You should have received a copy of the GNU General Public License 
+* You should have received a copy of the GNU General Public License
 * along with brender.  If not, see <http://www.gnu.org/licenses/>.
 *
 * ***** BEGIN GPL LICENSE BLOCK *****
@@ -30,7 +30,7 @@
     $GLOBALS['computer_name'] = "server";
     $GLOBALS['os']=""; #Needs to be defined before functions.php to prevent warnings/errors
     $pid=getmypid();
-    $imagemagick_root = ""; # keep empty if $IMAGEMAGICK_HOME is set 
+    $imagemagick_root = ""; # keep empty if $IMAGEMAGICK_HOME is set
 
 #-----------------------------------------------------
 
@@ -38,14 +38,14 @@ require "functions.php";
 require "connect.php";
 
 output("
- _                        _           
-| |__  _ __ ___ _ __   __| | ___ _ __ 
+ _                        _
+| |__  _ __ ___ _ __   __| | ___ _ __
 | '_ \| '__/ _ \ '_ \ / _` |/ _ \ '__|
-| |_) | | |  __/ | | | (_| |  __/ |   
-|_.__/|_|  \___|_| |_|\__,_|\___|_|   
+| |_) | | |  __/ | | | (_| |  __/ |
+|_.__/|_|  \___|_| |_|\__,_|\___|_|
 
    ---- brender server 0.5 ----
-   
+
 ");
 
 #-----some server settings------
@@ -156,7 +156,7 @@ while (1 <> 2) {
 					if ($where_to_end > $end) {   # we render more than needed, lets cut the end
 						$where_to_end = $end;
 					}
-					$new_start = $current + $number_of_chunks; 
+					$new_start = $current + $number_of_chunks;
 					output("$client speed $speed : render $number_of_chunks chunks = ($where_to_start - $where_to_end)");
 					if ($current < $end+1) {
 						# -----------------------------------------
@@ -164,7 +164,7 @@ while (1 <> 2) {
 						# -----------------------------------------
 
 						if ($config == "BLEND_DEFAULT") {
-                                                	$render_order = "-b \'$blend_path/$scene/$shot.blend\'";
+                                                	$render_order = "-b \'$blend_path/$scene/$shot.blend\' -y";
                                                	}
                                                	else {
                                                        $output_path=get_path($project,"output",$client_os);
@@ -175,14 +175,14 @@ while (1 <> 2) {
 
 						if (($where_to_start + $number_of_chunks) > $end) {
 							#---last chunk of job, its the end, we only need to render frames from CURRENT to END---
-							$render_order.= " -s $where_to_start -e $end -a -JOB $id"; 
+							$render_order.= " -s $where_to_start -e $end -a -JOB $id";
 							$info_string.= " $where_to_start-$end (last chunk)";
 							output("===last chunk=== job $scene/$shot finished soon====");
 							send_order($client,"declare_finished","$id","30");
 						}
 						else {
 							#---normal job...we render frames from CURRENT to DO_END
-							$render_order.= " -s $where_to_start -e $where_to_end -a -JOB $id"; 
+							$render_order.= " -s $where_to_start -e $where_to_end -a -JOB $id";
 							$info_string.= " $where_to_start-$where_to_end";
 						}
 						output("job_render for $client :::: $render_order-----------");
@@ -297,7 +297,7 @@ function check_and_execute_server_orders() {
 			remove_order($id);
 			server_stop();
 		}
-		
+
 	}
 
 }
